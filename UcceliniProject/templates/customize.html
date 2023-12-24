@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Customize Your Wrap - Uccelini Studios{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-serif text-independence-purple mb-4">Customize Your Paper Wrap</h1>
+
+    <!-- Customization Options -->
+    <div class="flex flex-col md:flex-row justify-between">
+        <!-- Preset Selection -->
+        <div class="w-full md:w-1/3 mb-4">
+            <label for="preset" class="block text-gray-700 text-sm font-bold mb-2">Choose a Preset:</label>
+            <select id="preset" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight">
+                <!-- Preset options here -->
+                <option>Floral Delight</option>
+                <option>Geometric Patterns</option>
+                <option>Abstract Art</option>
+                <!-- Add more preset options -->
+            </select>
+        </div>
+
+        <!-- Custom Build Form -->
+        <div class="w-full md:w-2/3 space-y-4">
+            <!-- Base Pattern Selection -->
+            <div>
+                <label for="basePattern" class="block text-gray-700 text-sm font-bold mb-2">Select Base Pattern:</label>
+                <select id="basePattern" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight">
+                    <!-- Base pattern options here -->
+                    <option>Stripes</option>
+                    <option>Polka Dots</option>
+                    <option>Chevron</option>
+                    <!-- Add more base pattern options -->
+                </select>
+            </div>
+
+            <!-- Text Input -->
+            <div>
+                <label for="customText" class="block text-gray-700 text-sm font-bold mb-2">Add Text (Optional):</label>
+                <input type="text" id="customText" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" placeholder="Happy Birthday, Congrats, etc...">
+            </div>
+
+            <!-- Image Upload -->
+            <div>
+                <label for="customImage" class="block text-gray-700 text-sm font-bold mb-2">Upload Image (Optional):</label>
+                <input type="file" id="customImage" class="shadow w-full py-2 px-3 text-gray-700">
+            </div>
+
+            <!-- Sliders for Customization -->
+            <div class="flex justify-between space-x-4">
+                <div class="w-1/2">
+                    <label for="rotation" class="block text-gray-700 text-sm font-bold mb-2">Rotation:</label>
+                    <input type="range" id="rotation" min="0" max="360" class="slider">
+                </div>
+                <div class="w-1/2">
+                    <label for="density" class="block text-gray-700 text-sm font-bold mb-2">Density:</label>
+                    <input type="range" id="density" min="1" max="100" class="slider">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Window -->
+    <div class="mt-8">
+        <h2 class="text-2xl font-serif text-independence-purple mb-3">Preview:</h2>
+        <div id="previewWindow" class="w-full h-64 bg-gray-200 flex items-center justify-center">
+            <!-- The preview of the paper wrap will be rendered here -->
+            <p class="text-gray-500">Your design will appear here...</p>
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-8">
+        <button class="bg-melon hover:bg-soft-lavender text-white font-bold py-2 px-4 rounded shadow-lg">
+            Complete Customization
+        </button>
+    </div>
+</div>
+
+<script>
+// JavaScript to handle live updates to the preview window will go here.
+// You'll need to attach event listeners to the form controls and update the
+// preview window's innerHTML or background image based on the user's selections.
+</script>
+{% endblock %}
