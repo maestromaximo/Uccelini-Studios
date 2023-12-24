@@ -9,7 +9,7 @@
     <!-- Customization Options -->
     <div class="flex flex-col md:flex-row justify-between">
         <!-- Preset Selection -->
-        <div class="w-full md:w-1/3 mb-4">
+        <div class="w-full md:w-1/3 mb-4 mr-6">
             <label for="preset" class="block text-gray-700 text-sm font-bold mb-2">Choose a Preset:</label>
             <select id="preset" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight">
                 <option></option>
@@ -19,7 +19,15 @@
                         data-default-text="{{ preset.default_text }}">{{ preset.name }}</option>
                 {% endfor %}
             </select>
+
+            <div class="w-full  mt-20">
+                <h2 class="text-2xl font-serif text-independence-purple mb-3">Uploaded Image:</h2>
+                <div id="uploadedImageContainer" class="w-full h-64 bg-gray-300 flex items-center justify-center">
+                    <p class="text-gray-500">Image will be shown here...</p>
+                </div>
+            </div>
         </div>
+        
 
         <!-- Custom Build Form -->
         <div class="w-full md:w-2/3 space-y-4">
@@ -27,12 +35,12 @@
             <div>
                 <label for="basePattern" class="block text-gray-700 text-sm font-bold mb-2">Select Base Pattern:</label>
                 <select id="basePattern" onchange="updatePreview()" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight">
+                    <option></option>
                     {% for pattern in patterns %}
                     <option value="{{ pattern.id }}" data-image-url="{{ pattern.image.url }}">{{ pattern.name }}</option>
                     {% endfor %}
                 </select>
             </div>
-
 
             <!-- Text Input -->
             <div>
@@ -50,13 +58,20 @@
             <div class="flex justify-between space-x-4">
                 <div class="w-1/2">
                     <label for="rotation" class="block text-gray-700 text-sm font-bold mb-2">Rotation:</label>
-                    <input type="range" id="rotation" min="0" max="360" value="0" class="slider"> <!-- Set initial value to min -->
+                    <input type="range" id="rotation" min="0" max="360" value="0" class="slider">
                 </div>
                 <div class="w-1/2">
                     <label for="density" class="block text-gray-700 text-sm font-bold mb-2">Density:</label>
-                    <input type="range" id="density" min="1" max="100" value="1" class="slider"> <!-- Set initial value to min -->
+                    <input type="range" id="density" min="1" max="100" value="1" class="slider">
                 </div>
             </div>
+
+            <!-- Text Area for Special Instructions -->
+            <div class="mt-4">
+                <label for="specialInstructions" class="block text-gray-700 text-sm font-bold mb-2">Special Instructions:</label>
+                <textarea id="specialInstructions" name="specialInstructions" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" rows="4" placeholder="Enter any special instructions here..."></textarea>
+            </div>
+
         </div>
     </div>
 
@@ -64,93 +79,132 @@
     <div class="mt-8">
         <h2 class="text-2xl font-serif text-independence-purple mb-3">Preview:</h2>
         <div id="previewWindow" class="w-full h-64 bg-gray-200 flex items-center justify-center">
-            <!-- The preview of the paper wrap will be rendered here -->
             <p class="text-gray-500">Your design will appear here...</p>
         </div>
     </div>
 
-    <!-- Submit Button -->
+    <!-- Submit Button and Form -->
     <div class="mt-8">
-        <button class="bg-melon hover:bg-soft-lavender text-white font-bold py-2 px-4 rounded shadow-lg">
-            Complete Customization
-        </button>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="formCustomImage" name="customImage" style="display: none;" onchange="uploadImage()">
+            <input type="hidden" name="preset" id="formPreset">
+            <input type="hidden" name="basePattern" id="formBasePattern">
+            <input type="hidden" name="customText" id="formCustomText">
+            <input type="hidden" name="rotation" id="formRotation">
+            <input type="hidden" name="density" id="formDensity">
+            <button class="bg-melon hover:bg-soft-lavender text-white font-bold py-2 px-4 rounded shadow-lg" type="submit">Complete Customization</button>
+        </form>
     </div>
 </div>
-
-<!-- <script>
-document.getElementById('customImage').addEventListener('change', function(event) {
-    var reader = new FileReader();
-    reader.onload = function(){
-        var output = document.getElementById('previewWindow');
-        output.style.backgroundImage = 'url(' + reader.result + ')';
-    };
-    reader.readAsDataURL(event.target.files[0]);
-});
-
-</script> -->
 
 <script>
     function updatePreview() {
         var selectedPattern = document.getElementById('basePattern').selectedOptions[0];
         var imageUrl = selectedPattern.getAttribute('data-image-url');
         var previewWindow = document.getElementById('previewWindow');
-    
-        // Update background image
+
         previewWindow.style.backgroundImage = 'url(' + imageUrl + ')';
         previewWindow.style.backgroundSize = 'cover';
 
-        // Call updateText to handle text updates
         updateText();
+        updateImage();
+        updateFormFields();
     }
-    
     function updateText() {
         var previewWindow = document.getElementById('previewWindow');
         var customText = document.getElementById('customText').value;
         var density = parseInt(document.getElementById('density').value);
         var rotation = parseInt(document.getElementById('rotation').value);
 
-        // Clear existing text
         while(previewWindow.firstChild){
             previewWindow.removeChild(previewWindow.firstChild);
         }
 
-        // Create text nodes based on density
         for(var i = 0; i < density; i++){
             var textNode = document.createElement('div');
             textNode.textContent = customText;
             textNode.style.transform = 'rotate(' + rotation + 'deg)';
             textNode.style.position = 'absolute';
             textNode.style.whiteSpace = 'nowrap';
-            textNode.style.fontSize = (100 / density) + 'px'; // Adjust font size based on density
+            textNode.style.fontSize = (100 / density) + 'px';
             previewWindow.appendChild(textNode);
         }
+        updateFormFields();
     }
+    
     function updateFromPreset() {
         var selectedPreset = document.getElementById('preset').selectedOptions[0];
         var patternId = selectedPreset.getAttribute('data-pattern-id');
         var defaultText = selectedPreset.getAttribute('data-default-text');
 
-        // Set the base pattern selection
         var basePatternSelect = document.getElementById('basePattern');
         basePatternSelect.value = patternId;
-        updatePreview();  // This will update the background image
+        updatePreview();
 
-        // Set the custom text
         var customTextInput = document.getElementById('customText');
         customTextInput.value = defaultText;
-        updateText();  // This will update the text
+        updateText();
     }
 
-    // Initial call to set up listeners
-    document.getElementById('preset').addEventListener('change', updateFromPreset);
+    function updateImage() {
+        var previewWindow = document.getElementById('previewWindow');
+        var rotation = parseInt(document.getElementById('rotation').value);
+        var size = parseInt(document.getElementById('density').value);
 
-    // Event listeners
+        var imageNode = document.createElement('img');
+        imageNode.src = previewWindow.style.backgroundImage.slice(5, -2); // Extracting URL
+        imageNode.style.transform = 'rotate(' + rotation + 'deg)';
+        imageNode.style.position = 'absolute';
+        imageNode.style.left = '10%'; // Adjust as needed
+        imageNode.style.width = (size * 1.5) + 'px'; // Adjust size based on slider
+        previewWindow.appendChild(imageNode);
+    }
+
+    function uploadImage() {
+        var input = document.getElementById('formCustomImage');
+        var imageContainer = document.getElementById('uploadedImageContainer');
+
+        // Check if a file is selected
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                imageContainer.innerHTML = '<img src="' + event.target.result + '" alt="Uploaded Image" style="max-width: 100%; max-height: 100%;">';
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            // Handle the case where no file is selected
+            imageContainer.innerHTML = '<p class="text-gray-500">No image selected</p>';
+        }
+    }
+
+
+    // Attach change event listener to the hidden file input
+    document.getElementById('formCustomImage').addEventListener('change', uploadImage);
+
+    function updateFormFields() {
+        document.getElementById('formPreset').value = document.getElementById('preset').value;
+        document.getElementById('formBasePattern').value = document.getElementById('basePattern').value;
+        document.getElementById('formCustomText').value = document.getElementById('customText').value;
+        document.getElementById('formRotation').value = document.getElementById('rotation').value;
+        document.getElementById('formDensity').value = document.getElementById('density').value;
+    }
+    document.getElementById('customImage').addEventListener('change', function() {
+    // Copy the file to the hidden input
+    var formInput = document.getElementById('formCustomImage');
+    var inputFile = document.getElementById('customImage');
+    formInput.files = inputFile.files;
+
+    // Call uploadImage to update the display
+    uploadImage();
+});
+
+    // document.getElementById('customImage').addEventListener('change', uploadImage);
+    document.getElementById('preset').addEventListener('change', updateFromPreset);
     document.getElementById('basePattern').addEventListener('change', updatePreview);
     document.getElementById('customText').addEventListener('input', updateText);
     document.getElementById('density').addEventListener('input', updateText);
     document.getElementById('rotation').addEventListener('input', updateText);
-
-    
 </script>
 
 {% endblock %}

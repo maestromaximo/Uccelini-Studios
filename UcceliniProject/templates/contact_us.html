@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact - Uccelini Studios{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-soft-lavender text-center py-32">
+    <div class="container mx-auto px-6">
+        <img src="{% static 'square_logo.jpg' %}" alt="Uccelini Studios Logo" class="mx-auto h-24 mb-6">
+        <h1 class="text-5xl font-serif text-independence-purple">Get in Touch</h1>
+        <p class="font-semibold text-xl mt-4">We're here to assist with any questions or requests you have.</p>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="container mx-auto px-6 py-16">
+    <div class="max-w-2xl mx-auto">
+        <h2 class="text-4xl font-serif text-independence-purple text-center mb-8">Contact Details</h2>
+        
+        <!-- Etsy -->
+        <div class="mb-6">
+            <h3 class="font-serif text-lg text-independence-purple">Visit Our Etsy Store</h3>
+            <a href="https://www.etsy.com/ca/listing/1364580128/personalized-valentines-gift-anniversary" class="text-melon hover:text-soft-lavender">Uccelini on Etsy</a>
+        </div>
+
+        <!-- Instagram -->
+        <div class="mb-6">
+            <h3 class="font-serif text-lg text-independence-purple">Follow Us on Instagram</h3>
+            <a href="https://www.instagram.com/uccellinicreativestudio/" class="text-melon hover:text-soft-lavender">uccellinicreativestudio</a>
+        </div>
+
+        <!-- Contact Numbers -->
+        <div class="mb-6">
+            <h3 class="font-serif text-lg text-independence-purple">Phone Numbers</h3>
+            <p class="text-gray-600">289-541-7839 <br> 416-419-4941</p>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-6">
+            <h3 class="font-serif text-lg text-independence-purple">Email for Support</h3>
+            <a href="mailto:angelpineda@uccellini.ca" class="text-melon hover:text-soft-lavender">angelpineda@uccellini.ca</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

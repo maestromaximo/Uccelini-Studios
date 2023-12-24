@@ -28,6 +28,7 @@ class Customization(models.Model):
     number_of_rolls = models.IntegerField(default=1)
     rotation = models.IntegerField(default=0)
     density = models.IntegerField(default=50)
+    special_notes = models.TextField(null=True)
 
     def __str__(self):
         return f'Customization for {self.user.username}'

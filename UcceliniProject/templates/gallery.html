@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Gallery - Uccelini Studios{% endblock %}
+
+{% block content %}
+
+<style>
+    .gallery-image {
+        height: 200px;  /* Set a fixed height */
+        object-fit: cover;  /* Ensure the image covers the area */
+        width: 100%;  /* Ensure the width is always 100% of the container */
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="bg-light-blue text-center py-32">
+    <div class="container mx-auto px-6">
+        <h1 class="text-5xl font-serif text-independence-purple">Our Gallery</h1>
+        <p class="text-soft-lavender text-xl italic font-medium mt-4">Explore our unique and custom wrapping paper designs</p>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="container mx-auto px-6 py-16">
+    <h2 class="text-4xl font-serif text-independence-purple text-center mb-12">Featured Designs</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Product 1 -->
+        <div class="rounded-lg overflow-hidden shadow-lg">
+            <img src="{% static 'sample_product_1.png' %}" alt="Sample Product 1" class="gallery-image">
+            <div class="p-4">
+                <h3 class="font-serif text-lg text-independence-purple">Elegant Floral Pattern</h3>
+                <p class="text-gray-600 mt-2">Perfect for special occasions and celebrations.</p>
+            </div>
+        </div>
+        <!-- Product 2 -->
+        <div class="rounded-lg overflow-hidden shadow-lg">
+            <img src="{% static 'sample_product_2.png' %}" alt="Sample Product 2" class="gallery-image">
+            <div class="p-4">
+                <h3 class="font-serif text-lg text-independence-purple">Geometric Charm</h3>
+                <p class="text-gray-600 mt-2">A modern and chic design for any gift.</p>
+            </div>
+        </div>
+        <!-- Product 3 -->
+        <div class="rounded-lg overflow-hidden shadow-lg">
+            <img src="{% static 'sample_product_3.png' %}" alt="Sample Product 3" class="gallery-image">
+            <div class="p-4">
+                <h3 class="font-serif text-lg text-independence-purple">Abstract Artistry</h3>
+                <p class="text-gray-600 mt-2">Bold and artistic, ideal for making a statement.</p>
+            </div>
+        </div>
+        <!-- Product 4 -->
+        <div class="rounded-lg overflow-hidden shadow-lg">
+            <img src="{% static 'sample_product_rectangular.png' %}" alt="Sample Product Rectangular" class="gallery-image">
+            <div class="p-4">
+                <h3 class="font-serif text-lg text-independence-purple">Classic Elegance</h3>
+                <p class="text-gray-600 mt-2">Timeless design for sophisticated gifting.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="bg-whisper-gray py-16">
+    <div class="text-center container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-independence-purple">Inspired to Create?</h2>
+        <p class="text-gray-700 mt-4">Start designing your own custom wrapping paper today.</p>
+        <a href="{% url 'customize'%}" class="mt-8 inline-block bg-melon text-white py-3 px-8 rounded-lg shadow-lg hover:bg-soft-lavender transition duration-300 ease-in-out">Begin Customizing</a>
+    </div>
+</section>
+{% endblock %}
