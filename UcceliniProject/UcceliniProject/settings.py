@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)frcuk&!@w5c=csgu^c*pdptnli-%po7^fv*_elud#tiq^#i9i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['uccelinistudios.pythonanywhere.com']
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).resolve().parent.parent
 
