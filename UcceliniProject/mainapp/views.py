@@ -23,12 +23,10 @@ from .forms import CustomizationForm, PatternForm, PresetForm
     # return render(request, 'customize.html', context)
 def customize(request):
     patterns = Pattern.objects.all()
-    presets = Preset.objects.all()
-    # Add other queries as needed
+    presets = Preset.objects.select_related('pattern').all()  # Use select_related for efficiency
 
     context = {
         'patterns': patterns,
         'presets': presets,
-        # Add other context variables as needed
     }
     return render(request, 'customize.html', context)

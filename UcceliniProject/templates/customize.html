@@ -12,8 +12,11 @@
         <div class="w-full md:w-1/3 mb-4">
             <label for="preset" class="block text-gray-700 text-sm font-bold mb-2">Choose a Preset:</label>
             <select id="preset" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight">
+                <option></option>
                 {% for preset in presets %}
-                <option value="{{ preset.id }}">{{ preset.name }}</option>
+                <option value="{{ preset.id }}" 
+                        data-pattern-id="{{ preset.pattern.id }}" 
+                        data-default-text="{{ preset.default_text }}">{{ preset.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -29,6 +32,7 @@
                     {% endfor %}
                 </select>
             </div>
+
 
             <!-- Text Input -->
             <div>
@@ -46,11 +50,11 @@
             <div class="flex justify-between space-x-4">
                 <div class="w-1/2">
                     <label for="rotation" class="block text-gray-700 text-sm font-bold mb-2">Rotation:</label>
-                    <input type="range" id="rotation" min="0" max="360" class="slider">
+                    <input type="range" id="rotation" min="0" max="360" value="0" class="slider"> <!-- Set initial value to min -->
                 </div>
                 <div class="w-1/2">
                     <label for="density" class="block text-gray-700 text-sm font-bold mb-2">Density:</label>
-                    <input type="range" id="density" min="1" max="100" class="slider">
+                    <input type="range" id="density" min="1" max="100" value="1" class="slider"> <!-- Set initial value to min -->
                 </div>
             </div>
         </div>
@@ -93,24 +97,60 @@ document.getElementById('customImage').addEventListener('change', function(event
     
         // Update background image
         previewWindow.style.backgroundImage = 'url(' + imageUrl + ')';
-    
-        // Update text, density, and rotation
+        previewWindow.style.backgroundSize = 'cover';
+
+        // Call updateText to handle text updates
         updateText();
     }
     
     function updateText() {
+        var previewWindow = document.getElementById('previewWindow');
         var customText = document.getElementById('customText').value;
-        var density = document.getElementById('density').value;
-        var rotation = document.getElementById('rotation').value;
-    
-        // Logic to update text, density, and rotation
-        // This part will require complex logic to handle text size, repeat count, and rotation
-        // You might need to create and position multiple elements to simulate density and rotation
+        var density = parseInt(document.getElementById('density').value);
+        var rotation = parseInt(document.getElementById('rotation').value);
+
+        // Clear existing text
+        while(previewWindow.firstChild){
+            previewWindow.removeChild(previewWindow.firstChild);
+        }
+
+        // Create text nodes based on density
+        for(var i = 0; i < density; i++){
+            var textNode = document.createElement('div');
+            textNode.textContent = customText;
+            textNode.style.transform = 'rotate(' + rotation + 'deg)';
+            textNode.style.position = 'absolute';
+            textNode.style.whiteSpace = 'nowrap';
+            textNode.style.fontSize = (100 / density) + 'px'; // Adjust font size based on density
+            previewWindow.appendChild(textNode);
+        }
     }
-    
-    // Event listeners for text, density, and rotation changes
+    function updateFromPreset() {
+        var selectedPreset = document.getElementById('preset').selectedOptions[0];
+        var patternId = selectedPreset.getAttribute('data-pattern-id');
+        var defaultText = selectedPreset.getAttribute('data-default-text');
+
+        // Set the base pattern selection
+        var basePatternSelect = document.getElementById('basePattern');
+        basePatternSelect.value = patternId;
+        updatePreview();  // This will update the background image
+
+        // Set the custom text
+        var customTextInput = document.getElementById('customText');
+        customTextInput.value = defaultText;
+        updateText();  // This will update the text
+    }
+
+    // Initial call to set up listeners
+    document.getElementById('preset').addEventListener('change', updateFromPreset);
+
+    // Event listeners
+    document.getElementById('basePattern').addEventListener('change', updatePreview);
     document.getElementById('customText').addEventListener('input', updateText);
     document.getElementById('density').addEventListener('input', updateText);
     document.getElementById('rotation').addEventListener('input', updateText);
-    </script>
+
+    
+</script>
+
 {% endblock %}
