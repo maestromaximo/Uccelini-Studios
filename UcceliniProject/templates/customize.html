@@ -12,11 +12,9 @@
         <div class="w-full md:w-1/3 mb-4">
             <label for="preset" class="block text-gray-700 text-sm font-bold mb-2">Choose a Preset:</label>
             <select id="preset" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight">
-                <!-- Preset options here -->
-                <option>Floral Delight</option>
-                <option>Geometric Patterns</option>
-                <option>Abstract Art</option>
-                <!-- Add more preset options -->
+                {% for preset in presets %}
+                <option value="{{ preset.id }}">{{ preset.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
@@ -25,12 +23,10 @@
             <!-- Base Pattern Selection -->
             <div>
                 <label for="basePattern" class="block text-gray-700 text-sm font-bold mb-2">Select Base Pattern:</label>
-                <select id="basePattern" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight">
-                    <!-- Base pattern options here -->
-                    <option>Stripes</option>
-                    <option>Polka Dots</option>
-                    <option>Chevron</option>
-                    <!-- Add more base pattern options -->
+                <select id="basePattern" onchange="updatePreview()" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight">
+                    {% for pattern in patterns %}
+                    <option value="{{ pattern.id }}" data-image-url="{{ pattern.image.url }}">{{ pattern.name }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
@@ -77,9 +73,44 @@
     </div>
 </div>
 
+<!-- <script>
+document.getElementById('customImage').addEventListener('change', function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+        var output = document.getElementById('previewWindow');
+        output.style.backgroundImage = 'url(' + reader.result + ')';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+});
+
+</script> -->
+
 <script>
-// JavaScript to handle live updates to the preview window will go here.
-// You'll need to attach event listeners to the form controls and update the
-// preview window's innerHTML or background image based on the user's selections.
-</script>
+    function updatePreview() {
+        var selectedPattern = document.getElementById('basePattern').selectedOptions[0];
+        var imageUrl = selectedPattern.getAttribute('data-image-url');
+        var previewWindow = document.getElementById('previewWindow');
+    
+        // Update background image
+        previewWindow.style.backgroundImage = 'url(' + imageUrl + ')';
+    
+        // Update text, density, and rotation
+        updateText();
+    }
+    
+    function updateText() {
+        var customText = document.getElementById('customText').value;
+        var density = document.getElementById('density').value;
+        var rotation = document.getElementById('rotation').value;
+    
+        // Logic to update text, density, and rotation
+        // This part will require complex logic to handle text size, repeat count, and rotation
+        // You might need to create and position multiple elements to simulate density and rotation
+    }
+    
+    // Event listeners for text, density, and rotation changes
+    document.getElementById('customText').addEventListener('input', updateText);
+    document.getElementById('density').addEventListener('input', updateText);
+    document.getElementById('rotation').addEventListener('input', updateText);
+    </script>
 {% endblock %}
