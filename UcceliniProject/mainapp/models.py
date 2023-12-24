@@ -20,7 +20,11 @@ class Customization(models.Model):
     custom_text = models.CharField(max_length=255, blank=True)
     custom_image = models.ImageField(upload_to='custom_images/', blank=True, null=True)
     faces_in_image = models.BooleanField(default=False)
-    paper_size = models.CharField(max_length=10, choices=[('S', 'Small'), ('M', 'Medium'), ('L', 'Large'), ('XL', 'Extra Large')])
+    paper_size = models.CharField(
+        max_length=10, 
+        choices=[('S', 'Small'), ('M', 'Medium'), ('L', 'Large'), ('XL', 'Extra Large')],
+        default='S'  
+    )
     number_of_rolls = models.IntegerField(default=1)
     rotation = models.IntegerField(default=0)
     density = models.IntegerField(default=50)
@@ -51,7 +55,11 @@ class Order(models.Model):
     customization = models.ForeignKey(Customization, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=100)  # e.g., 'Pending', 'Shipped', 'Delivered'
     created_at = models.DateTimeField(auto_now_add=True)
-    # Additional fields like payment information, shipping address, etc.
+    shipping_address = models.TextField()
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.CharField(max_length=100)  # e.g., 'Paid', 'Pending', 'Failed'
+    # Add any other relevant fields
+
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -63,4 +71,7 @@ class Review(models.Model):
 class ShoppingCart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(Customization)
-    # Additional fields like total cost
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    notes = models.TextField(blank=True, null=True)  # Optional field for any additional instructions or notes
+    # Add any other relevant fields
+

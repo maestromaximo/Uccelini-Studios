@@ -17,6 +17,9 @@
             <a href="{% url 'customize'%}" class="text-independence-purple hover:text-soft-lavender font-medium">Customize</a>
             <a href="/gallery" class="text-independence-purple hover:text-soft-lavender font-medium">Gallery</a>
             <a href="/contact" class="text-independence-purple hover:text-soft-lavender font-medium">Contact</a>
+            {% if request.user.is_superuser %}
+                <a href="/admin" class="font-bold text-independence-purple hover:text-soft-lavender">Admin</a>
+            {% endif %}
         </div>
 
         <!-- Mobile Menu Button -->
