@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home - Uccelini Studios{% endblock %}
+
+{% block content %}
+<!-- Hero Section with a background image -->
+<section class="relative bg-no-repeat bg-cover text-center py-32" style="background-image: url('{% static 'sample_product_1.png' %}');">
+    <div class="absolute inset-0 bg-independence-purple opacity-80"></div>
+    <div class="relative z-10 container mx-auto px-6">
+        <h1 class="text-5xl font-serif text-white">Elevate Your Gift Giving</h1>
+        <p class="text-soft-lavender text-xl italic font-medium mt-4">Uniquely crafted paper wraps for every occasion</p>
+        <a href="{% url 'customize'%}" class="mt-8 inline-block bg-melon text-white py-3 px-8 rounded-lg shadow-lg hover:bg-soft-lavender transition duration-300 ease-in-out transform hover:-translate-y-1">Start Customizing</a>
+    </div>
+</section>
+
+<!-- Feature Section -->
+<section class="container mx-auto px-6 py-16 text-center">
+    <h2 class="text-4xl font-serif text-independence-purple">Why Choose Uccelini?</h2>
+    <div class="grid md:grid-cols-3 gap-10 mt-10">
+        <div class="space-y-4">
+            <img src="{% static 'pencil-and-ruler.png' %}" alt="Custom Designs" class="mx-auto h-16">
+            <h3 class="font-semibold text-lg">Custom Designs</h3>
+            <p class="text-gray-600">Tailor-made patterns and sizes to fit your unique gifting style.</p>
+        </div>
+        <div class="space-y-4">
+            <img src="{% static 'growth.png' %}" alt="Eco-Friendly Materials" class="mx-auto h-16">
+            <h3 class="font-semibold text-lg">Eco-Friendly Materials</h3>
+            <p class="text-gray-600">Sustainably sourced papers that are as kind to the planet as they are beautiful.</p>
+        </div>
+        <div class="space-y-4">
+            <img src="{% static 'fast-delivery.png' %}" alt="Fast Delivery" class="mx-auto h-16">
+            <h3 class="font-semibold text-lg">Fast Delivery</h3>
+            <p class="text-gray-600">Efficient processing and shipping, because anticipation shouldn't turn into impatience.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="bg-whisper-gray py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-center text-4xl font-serif text-independence-purple">Kind Words from Happy Customers</h2>
+        <div class="mt-12 space-y-8">
+            <blockquote class="italic text-gray-600">"Uccelini's custom wraps added a touch of magic to our holiday gifts. Absolutely delighted!" - Emma B.</blockquote>
+            <blockquote class="italic text-gray-600">"The quality is unmatched, and the ability to customize is a game changer for our corporate events." - Liam S.</blockquote>
+            <!-- Add more testimonials as needed -->
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="container mx-auto px-6 py-16">
+    <h2 class="text-center text-4xl font-serif text-independence-purple">Frequently Asked Questions</h2>
+    <div class="mt-10 divide-y divide-gray-300">
+        <div class="py-4">
+            <h3 class="text-lg font-semibold">What materials do you use for the wrapping paper?</h3>
+            <p class="text-gray-600 mt-2">We use a selection of fine, eco-friendly materials that ensure durability and sustainability.</p>
+        </div>
+        <div class="py-4">
+            <h3 class="text-lg font-semibold">How can I customize my order?</h3>
+            <p class="text-gray-600 mt-2">Use our online customization tool to choose patterns, colors, and sizes, or get in touch for specialized assistance.</p>
+        </div>
+        <!-- Add more FAQs as needed -->
+    </div>
+</section>
+
+<!-- Call to Action for Customization -->
+<section class="bg-baby-blue/60 py-16">
+    <div class="text-center container mx-auto px-6">
+        <h2 class="text-4xl font-serif text-independence-purple">Ready to Wrap?</h2>
+        <p class="text-gray-700 mt-4">Start your bespoke wrapping paper journey with us and make your gifts unforgettable.</p>
+        <a href="{% url 'customize'%}" class="mt-8 inline-block bg-melon text-white py-3 px-8 rounded-lg shadow-lg hover:bg-soft-lavender transition duration-300 ease-in-out">Begin Customizing</a>
+    </div>
+</section>
+{% endblock %}

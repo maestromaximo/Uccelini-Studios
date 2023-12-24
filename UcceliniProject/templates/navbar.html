@@ -1,0 +1,31 @@
+<!-- navbar.html -->
+{% load static %}
+
+<nav class="bg-whisper-gray shadow-md">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        
+        <!-- Logo and Brand Name -->
+        <a class="font-serif text-lg text-independence-purple flex items-center" href="/">
+            <!-- Logo Image -->
+            <img src="{% static 'square_logo.jpg' %}" alt="Uccelini Studios Logo" class="h-10 mr-3">
+            Uccelini Studios
+        </a>
+
+        <!-- Primary Navigation -->
+        <div class="hidden md:flex items-center space-x-6">
+            <a href="/" class="text-independence-purple hover:text-soft-lavender font-medium">Home</a>
+            <a href="/customize" class="text-independence-purple hover:text-soft-lavender font-medium">Customize</a>
+            <a href="/gallery" class="text-independence-purple hover:text-soft-lavender font-medium">Gallery</a>
+            <a href="/contact" class="text-independence-purple hover:text-soft-lavender font-medium">Contact</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+            <button type="button" class="text-independence-purple hover:text-soft-lavender focus:outline-none" aria-label="toggle menu">
+                <svg viewBox="0 0 24 24" class="h-8 w-8 fill-current">
+                    <path d="M4 5h16v2H4zM4 11h16v2H4zM4 17h16v2H4z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>

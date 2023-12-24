@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home - Uccelini Studios{% endblock %}
+
+{% block content %}
+<!-- Hero Section with a background image -->
+<div class="relative bg-white text-center py-16 flex items-center justify-center" style="background-image: url('{% static 'sample_product_1.png' %}'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="z-10">
+        <h1 class="text-4xl font-serif text-white">Elevate Your Gift Giving</h1>
+        <p class="text-white text-xl italic font-medium font-sans mt-4">Customize your paper wraps to any size and design</p>
+        <a href="/customize" class="mt-6 inline-block bg-melon text-white py-3 px-6 rounded-lg shadow hover:bg-soft-lavender">Start Customizing</a>
+    </div>
+</div>
+
+<!-- About Section -->
+<div class="container mx-auto px-6 py-16 text-center">
+    <h2 class="text-3xl font-serif text-independence-purple">About Us</h2>
+    <p class="font-sans text-gray-700 mt-4">At Uccelini Studios, we blend artistry and sustainability to create beautiful, custom wrapping papers that make every gift special. Discover our story and our passion for design.</p>
+</div>
+
+<!-- Product Gallery Section -->
+<div class="container mx-auto px-6 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Product Image -->
+        <div class="overflow-hidden rounded-lg shadow-lg">
+            <img src="{% static 'sample_product_2.png' %}" alt="Product 2" class="w-full">
+        </div>
+        <!-- Product Image -->
+        <div class="overflow-hidden rounded-lg shadow-lg">
+            <img src="{% static 'sample_product_3.png' %}" alt="Product 3" class="w-full">
+        </div>
+        <!-- Product Image -->
+        <div class="overflow-hidden rounded-lg shadow-lg">
+            <img src="{% static 'sample_product_rectangular.png' %}" alt="Product Rectangular" class="w-full">
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action for Customization -->
+<div class="bg-light-blue/60">
+    <div class="container mx-auto px-6 py-16 text-center">
+        <h2 class="text-3xl font-serif text-independence-purple">Create Your Unique Wrap</h2>
+        <p class="font-sans text-gray-700 mt-4">Begin your custom design journey with us today and make every gift you give a work of art.</p>
+        <a href="/customize" class="mt-6 inline-block bg-melon font-semibold text-white py-3 px-6 rounded-lg shadow hover:bg-soft-lavender">Customize Now</a>
+    </div>
+</div>
+{% endblock %}
